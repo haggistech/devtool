@@ -53,6 +53,11 @@ func main() {
 			fmt.Printf("Error: %v\n", err)
 			os.Exit(1)
 		}
+	case "versions":
+		if err := commands.ListVersions(); err != nil {
+			fmt.Printf("Error: %v\n", err)
+			os.Exit(1)
+		}
 	case "pull":
 		handlePull(args[1:])
 	case "github":
@@ -159,6 +164,7 @@ func printUsage() {
 	fmt.Println("  config [show|set|init|reset]      Manage configuration (~/.devtool.yaml)")
 	fmt.Println("  list                              List available project templates")
 	fmt.Println("  pull <template> [path]            Clone a template repository")
+	fmt.Println("  versions                          Show installed tool versions")
 	fmt.Println("  github create <repo>              Create a GitHub repository")
 	fmt.Println("  confluence create page            Create a Confluence page")
 	fmt.Println("  create base <type> project        Create a project template")
