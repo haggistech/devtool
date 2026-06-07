@@ -87,6 +87,26 @@ func InitProject() error {
 		return err
 	}
 
+	// Check if project directory exists before generating files
+	if _, err := os.Stat(projectPath); os.IsNotExist(err) {
+		fmt.Printf("⚠️  Warning: Project directory not found at %s\n", projectPath)
+		fmt.Println("Some generators were skipped. Please ensure the project creation completed successfully.")
+		if addEnvFile || addDocker || addPrecommit {
+			fmt.Println()
+			fmt.Println("To generate files manually, run from your project directory:")
+			if addEnvFile {
+				fmt.Printf("  devtool env-generate %s\n", projectType)
+			}
+			if addDocker {
+				fmt.Printf("  devtool docker-generate %s\n", projectType)
+			}
+			if addPrecommit {
+				fmt.Printf("  devtool precommit-generate %s\n", projectType)
+			}
+		}
+		return nil
+	}
+
 	// Generate additional files if requested
 	if addEnvFile {
 		if err := GenerateEnvFile(projectPath, projectType); err != nil {

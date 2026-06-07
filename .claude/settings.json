@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(./devtool help *)",
+      "Bash(mkdir -p /tmp/test_project)",
+      "Bash(/home/stuff/Projects/devtool/devtool -v create base golang project)",
+      "Bash(/home/stuff/Projects/devtool/devtool github *)",
+      "Bash(mkdir -p /tmp/test_terraform)",
+      "Bash(/home/stuff/Projects/devtool/devtool create *)",
+      "Bash(mkdir -p /tmp/existing_go)",
+      "Bash(echo \"module example.com/test\\\\n\\\\ngo 1.20\")",
+      "Bash(./devtool -v help)",
+      "Bash(./devtool config *)",
+      "Bash(./devtool list *)"
+    ]
+  }
+}

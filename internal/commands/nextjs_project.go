@@ -19,9 +19,17 @@ func CreateBaseNextJsProject(projectPath string) error {
 
 	fmt.Printf("Creating base Next.js project in %s\n", projectPath)
 	fmt.Println("⏳ This may take a few minutes...")
-	Logf("Executing: npx create-next-app %s", projectPath)
+	Logf("Executing: npx create-next-app with TypeScript, ESLint, Tailwind")
 
-	cmd := exec.Command("npx", "create-next-app", projectPath)
+	// Use non-interactive flags to avoid prompts
+	cmd := exec.Command("npx", "create-next-app@latest", projectPath,
+		"--typescript",
+		"--eslint",
+		"--tailwind",
+		"--app",
+		"--no-src-dir",
+		"--import-alias", "@/*",
+		"--skip-install")
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 
