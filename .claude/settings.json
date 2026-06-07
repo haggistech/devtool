@@ -19,7 +19,9 @@
       "Bash(mkdir -p internal/commands)",
       "Bash(/home/stuff/Projects/devtool/devtool test *)",
       "Bash(mkdir -p /tmp/test_nextjs_setup)",
-      "Bash(echo '{}')"
+      "Bash(echo '{}')",
+      "Bash(mkdir -p /tmp/test_docs)",
+      "Bash(/home/stuff/Projects/devtool/devtool docs *)"
     ]
   }
 }
