@@ -37,6 +37,14 @@ A powerful command-line utility for developers to quickly set up projects, integ
 - Python: pytest with fixtures
 - Includes example tests and configuration files
 
+### 📚 Documentation Generation
+- **`devtool docs <type> [language]`** - Generate project documentation
+- README: Project overview, features, installation, setup
+- API: REST endpoint documentation with examples
+- ADR: Architecture Decision Records structure
+- Setup: Development, testing, deployment guides
+- All: Generate complete documentation suite
+
 ### ⚙️ Configuration Management
 - **`devtool config`** - Manage ~/.devtool.yaml
   - `show` - Display current configuration
@@ -365,6 +373,13 @@ devtool test golang                   # Setup Go testing
 devtool test spring                   # Setup Spring testing
 devtool test nextjs                   # Setup Jest for Next.js
 
+# Documentation
+devtool docs readme golang            # Generate README
+devtool docs api spring               # Generate API docs
+devtool docs adr                      # Setup ADRs
+devtool docs setup nextjs             # Generate setup guide
+devtool docs all golang               # Generate all docs
+
 # Service Integration
 devtool github create <repo>          # Create GitHub repo
 devtool confluence create page        # Create Confluence page
@@ -560,6 +575,113 @@ pytest                    # Run all tests
 pytest -v               # Verbose
 pytest --cov            # With coverage
 pytest -m slow          # Run marked tests
+`
+
+## Documentation Generation
+
+The `devtool docs` command scaffolds professional project documentation.
+
+### README Templates
+```bash
+devtool docs readme golang
+devtool docs readme spring
+devtool docs readme nextjs
+```
+
+**Generates:** `README.md` with:
+- Project overview and features
+- Installation instructions (source, Docker)
+- Quick start guide
+- Configuration details
+- Development setup
+- Testing instructions
+- Deployment guidelines
+- Contributing guidelines
+- Troubleshooting section
+- Support information
+
+### API Documentation
+```bash
+devtool docs api [language]
+```
+
+**Generates:** `docs/API.md` with:
+- Base URL and endpoints
+- Authentication details
+- Error handling format
+- Example GET/POST/PUT/DELETE endpoints
+- Request/response examples
+- Rate limiting information
+- Versioning strategy
+- Changelog template
+
+### Architecture Decision Records
+```bash
+devtool docs adr
+```
+
+**Generates:**
+- `docs/adr/README.md` - ADR index and guidelines
+- `docs/adr/0001-project-setup.md` - Template ADR
+
+Each ADR documents:
+- Date and status
+- Context and problem
+- Decision made
+- Consequences (positive/negative)
+- Alternatives considered
+- References
+
+### Setup Guides
+```bash
+devtool docs setup golang
+devtool docs setup spring
+devtool docs setup nextjs
+```
+
+**Generates:** `docs/SETUP.md` with:
+- Prerequisites and installation
+- Development environment setup
+- Running locally (dev mode, with hot reload)
+- Testing procedures
+- Database setup (if applicable)
+- Environment configuration
+- Building for production
+- Deployment instructions
+- Troubleshooting guide
+- Performance monitoring
+
+### Generate All Documentation
+```bash
+devtool docs all golang
+```
+
+Generates all documentation at once:
+- README.md
+- docs/API.md
+- docs/SETUP.md
+- docs/adr/README.md
+- docs/adr/0001-project-setup.md
+
+## Documentation Best Practices
+
+1. **Keep it current** - Update docs when code changes
+2. **Be specific** - Use actual commands, not generic instructions
+3. **Include examples** - Show real requests/responses for APIs
+4. **Document why** - Explain decisions, not just what was chosen
+5. **Add troubleshooting** - Include common issues and solutions
+6. **Use consistent formatting** - Follow the generated templates
+7. **Link between docs** - Cross-reference related sections
+
+## Customization
+
+The generated templates are starting points. Customize them with:
+- Your actual API endpoints and responses
+- Specific database and service configurations
+- Team-specific development practices
+- Actual deployment targets and procedures
+- Real troubleshooting from your experience
+- Project-specific features and capabilities
 ```
 
 ## Project Structure
