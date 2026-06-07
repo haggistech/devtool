@@ -16,6 +16,12 @@ A powerful command-line utility for developers to quickly set up projects, integ
 - **`devtool create base <type> project`** - Create base project structure
 - Supports: Golang, Spring, Next.js, Terraform
 
+### 🛠️ Development Environment
+- **`devtool versions`** - Check installed tool versions
+- Detects 20+ common development tools
+- Shows version info with installation status
+- Useful for verifying environment compatibility
+
 ### ⚙️ Configuration Management
 - **`devtool config`** - Manage ~/.devtool.yaml
   - `show` - Display current configuration
@@ -333,6 +339,9 @@ devtool config set <key> <value>      # Set value
 devtool config init                   # Setup wizard
 devtool config reset                  # Delete config
 
+# Environment Check
+devtool versions                      # Show installed tool versions
+
 # Service Integration
 devtool github create <repo>          # Create GitHub repo
 devtool confluence create page        # Create Confluence page
@@ -342,6 +351,49 @@ devtool get_jira_ticket <ticket>      # Fetch Jira ticket
 devtool help                          # Show help
 devtool -v help                       # Verbose help
 ```
+
+## Tool Version Detection
+
+The `devtool versions` command detects and displays versions for:
+
+**Languages & Runtimes:**
+- Node.js, Python, Go, Java, Ruby, Rust, PHP
+
+**Package Managers:**
+- npm, pnpm, yarn, pip, Maven
+
+**DevOps & Cloud:**
+- Docker, Terraform, Packer, kubectl
+- AWS CLI, gcloud
+
+**Version Control & Tools:**
+- Git, GitHub CLI (gh)
+
+**Example Output:**
+```bash
+$ devtool versions
+
+🔧 Development Tools Version Check
+
+✅ Installed:
+  Node.js              18.19.1
+  npm                  10.2.4
+  Go                   1.21.0
+  Python               3.11.5
+  Docker               25.0.0
+  Git                  2.42.0
+  Terraform            1.6.0
+  kubectl              1.28.0
+
+❌ Not Installed (3):
+  Rust
+  PHP
+  Packer
+
+Summary: 17/20 tools installed
+```
+
+Use this to verify your environment has the tools needed for a project before starting.
 
 ## Project Structure
 
