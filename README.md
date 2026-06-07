@@ -22,6 +22,21 @@ A powerful command-line utility for developers to quickly set up projects, integ
 - Shows version info with installation status
 - Useful for verifying environment compatibility
 
+### 🔄 CI/CD Pipelines
+- **`devtool ci <provider> <language>`** - Generate CI/CD workflows
+- GitHub Actions (`.github/workflows/ci.yml`)
+- GitLab CI (`.gitlab-ci.yml`)
+- Includes: linting, testing, building, coverage reports
+- Languages: Golang, Spring, Next.js, Terraform
+
+### 🧪 Testing Frameworks
+- **`devtool test <language>`** - Setup testing frameworks
+- Go: Built-in testing with benchmarks
+- Spring: JUnit tests with Maven configuration
+- Next.js: Jest with TypeScript support
+- Python: pytest with fixtures
+- Includes example tests and configuration files
+
 ### ⚙️ Configuration Management
 - **`devtool config`** - Manage ~/.devtool.yaml
   - `show` - Display current configuration
@@ -342,6 +357,14 @@ devtool config reset                  # Delete config
 # Environment Check
 devtool versions                      # Show installed tool versions
 
+# CI/CD & Testing
+devtool ci github-actions golang      # GitHub Actions for Go
+devtool ci gitlab-ci spring           # GitLab CI for Spring
+devtool ci github-actions nextjs      # GitHub Actions for Next.js
+devtool test golang                   # Setup Go testing
+devtool test spring                   # Setup Spring testing
+devtool test nextjs                   # Setup Jest for Next.js
+
 # Service Integration
 devtool github create <repo>          # Create GitHub repo
 devtool confluence create page        # Create Confluence page
@@ -394,6 +417,150 @@ Summary: 17/20 tools installed
 ```
 
 Use this to verify your environment has the tools needed for a project before starting.
+
+## CI/CD Pipeline Generation
+
+The `devtool ci` command generates production-ready CI/CD pipelines for your projects.
+
+### GitHub Actions
+```bash
+devtool ci github-actions golang
+devtool ci github-actions spring
+devtool ci github-actions nextjs
+devtool ci github-actions terraform
+```
+
+**Generated file:** `.github/workflows/ci.yml`
+
+**Includes:**
+- Build and test stages
+- Dependency caching
+- Code linting
+- Coverage reporting
+- Multi-version testing (where applicable)
+
+**Example workflow for Go:**
+```yaml
+name: Go CI
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v4
+      - run: go build ./...
+      - run: go test -v ./...
+      - uses: codecov/codecov-action@v3
+```
+
+### GitLab CI
+```bash
+devtool ci gitlab-ci golang
+devtool ci gitlab-ci spring
+devtool ci gitlab-ci nextjs
+devtool ci gitlab-ci terraform
+```
+
+**Generated file:** `.gitlab-ci.yml`
+
+**Includes:**
+- Parallel job stages
+- Docker image specifications
+- Artifact management
+- Coverage reports
+- Backend configuration templates
+
+## Testing Framework Setup
+
+The `devtool test` command scaffolds testing frameworks and example tests.
+
+### Go Testing
+```bash
+devtool test golang [path]
+```
+
+**Creates:**
+- `internal/commands/example_test.go` - Example unit and benchmark tests
+- Uses Go's built-in testing package
+
+**Run tests:**
+```bash
+go test -v ./...          # Verbose
+go test -cover ./...      # With coverage
+go test -bench ./...      # Benchmarks
+```
+
+### Spring Boot Testing
+```bash
+devtool test spring [path]
+```
+
+**Creates:**
+- `src/test/java/com/example/demo/ExampleTest.java` - JUnit 5 tests
+- `src/test/resources/` directory for test configs
+- Example test with assertions
+
+**Add to pom.xml:**
+```xml
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-test</artifactId>
+  <scope>test</scope>
+</dependency>
+```
+
+**Run tests:**
+```bash
+mvn test                  # Run all tests
+mvn test -Dtest=*Test    # Run specific test
+mvn jacoco:report         # Coverage report
+```
+
+### JavaScript/TypeScript Testing
+```bash
+devtool test nextjs [path]
+```
+
+**Creates:**
+- `__tests__/example.test.tsx` - Jest test examples
+- `jest.config.js` - Jest configuration with TypeScript support
+- Coverage thresholds and rules
+
+**Install dependencies:**
+```bash
+npm install --save-dev jest @jest/globals ts-jest @types/jest
+```
+
+**Run tests:**
+```bash
+npm test                  # Run all tests
+npm test -- --watch      # Watch mode
+npm test -- --coverage   # With coverage report
+```
+
+### Python Testing
+```bash
+devtool test python [path]
+```
+
+**Creates:**
+- `tests/test_example.py` - pytest test examples with fixtures
+- `pytest.ini` - pytest configuration
+- Markers for test categorization
+
+**Install dependencies:**
+```bash
+pip install pytest pytest-cov
+```
+
+**Run tests:**
+```bash
+pytest                    # Run all tests
+pytest -v               # Verbose
+pytest --cov            # With coverage
+pytest -m slow          # Run marked tests
+```
 
 ## Project Structure
 
