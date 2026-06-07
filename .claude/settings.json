@@ -12,7 +12,14 @@
       "Bash(./devtool -v help)",
       "Bash(./devtool config *)",
       "Bash(./devtool list *)",
-      "Bash(./devtool versions *)"
+      "Bash(./devtool versions *)",
+      "Bash(mkdir -p /tmp/test_ci_go)",
+      "Bash(/home/stuff/Projects/devtool/devtool ci *)",
+      "Bash(mkdir -p /tmp/test_setup)",
+      "Bash(mkdir -p internal/commands)",
+      "Bash(/home/stuff/Projects/devtool/devtool test *)",
+      "Bash(mkdir -p /tmp/test_nextjs_setup)",
+      "Bash(echo '{}')"
     ]
   }
 }
