@@ -13,7 +13,17 @@ func CreateBaseTerraformProject(projectPath string) error {
 		projectPath = "."
 	}
 
+	if err := validateProjectPath(projectPath); err != nil {
+		return err
+	}
+
 	fmt.Printf("Creating base Terraform project in %s\n", projectPath)
+	Logf("Project path validated: %s", projectPath)
+
+	// Check if main.tf already exists
+	if CheckFileExists(filepath.Join(projectPath, "main.tf")) {
+		return fmt.Errorf("main.tf already exists at %s. This looks like an existing Terraform project", projectPath)
+	}
 
 	// Create directories for Terraform modules and environments
 	dirs := []string{
@@ -23,9 +33,10 @@ func CreateBaseTerraformProject(projectPath string) error {
 	}
 
 	for _, dir := range dirs {
-		err := os.MkdirAll(filepath.Join(projectPath, dir), 0755)
+		fullPath := filepath.Join(projectPath, dir)
+		err := os.MkdirAll(fullPath, 0755)
 		if err != nil {
-			return err
+			return fmt.Errorf("failed to create directory %s: %v", dir, err)
 		}
 	}
 
@@ -204,5 +215,13 @@ terraform plan
 terraform apply
 ` + "```" + `
 `
-	return os.WriteFile(filepath.Join(projectPath, "README.md"), []byte(readmeMd), 0644)
+	err = os.WriteFile(filepath.Join(projectPath, "README.md"), []byte(readmeMd), 0644)
+	if err != nil {
+		return err
+	}
+
+	fmt.Println("✓ Terraform project created successfully")
+	fmt.Printf("Next steps:\n  cd %s/environments/dev\n  terraform init\n  terraform plan\n", projectPath)
+
+	return nil
 }

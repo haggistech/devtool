@@ -49,6 +49,8 @@ func GetJiraTicket(ticketNumber string) error {
 	jiraDomain := os.Getenv("JIRA_DOMAIN")
 	jiraEmail := os.Getenv("JIRA_EMAIL")
 	jiraToken := os.Getenv("JIRA_API_TOKEN")
+
+	Logf("Checking Jira credentials for domain: %s", jiraDomain)
 	
 	if jiraDomain == "" || jiraEmail == "" || jiraToken == "" {
 		fmt.Println("JIRA environment variables not fully set.")

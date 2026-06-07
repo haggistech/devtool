@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 // CreateBaseGolangProject creates a new Golang project structure
@@ -13,7 +14,17 @@ func CreateBaseGolangProject(projectPath string) error {
 		projectPath = "."
 	}
 
+	if err := validateProjectPath(projectPath); err != nil {
+		return err
+	}
+
 	fmt.Printf("Creating base Golang project in %s\n", projectPath)
+	Logf("Project path validated: %s", projectPath)
+
+	// Check if go.mod already exists
+	if CheckFileExists(filepath.Join(projectPath, "go.mod")) {
+		return fmt.Errorf("go.mod already exists at %s. This looks like an existing Go project", projectPath)
+	}
 
 	// Create directories
 	dirs := []string{
@@ -26,9 +37,11 @@ func CreateBaseGolangProject(projectPath string) error {
 	}
 
 	for _, dir := range dirs {
-		err := os.MkdirAll(filepath.Join(projectPath, dir), 0755)
+		fullPath := filepath.Join(projectPath, dir)
+		Logf("Creating directory: %s", fullPath)
+		err := os.MkdirAll(fullPath, 0755)
 		if err != nil {
-			return err
+			return fmt.Errorf("failed to create directory %s: %v", dir, err)
 		}
 	}
 
@@ -90,5 +103,27 @@ go run cmd/main.go
 
 `, modName)
 
-	return os.WriteFile(filepath.Join(projectPath, "README.md"), []byte(readmeContent), 0644)
+	err = os.WriteFile(filepath.Join(projectPath, "README.md"), []byte(readmeContent), 0644)
+	if err != nil {
+		return err
+	}
+
+	fmt.Println("✓ Golang project created successfully")
+	fmt.Printf("Next steps:\n  cd %s\n  go mod tidy\n  go run cmd/main.go\n", projectPath)
+
+	return nil
+}
+
+// validateProjectPath checks if the project path is valid
+func validateProjectPath(path string) error {
+	if path == "." {
+		return nil
+	}
+	if len(path) == 0 {
+		return fmt.Errorf("project path cannot be empty")
+	}
+	if strings.Contains(path, "..") {
+		return fmt.Errorf("project path cannot contain '..'")
+	}
+	return nil
 }

@@ -12,12 +12,19 @@ func CreateBaseSpringProject(projectPath string) error {
 	if projectPath == "" {
 		projectPath = "."
 	}
-	
+
+	if err := validateProjectPath(projectPath); err != nil {
+		return err
+	}
+
 	fmt.Printf("Creating base Spring project in %s\n", projectPath)
+	Logf("Project path validated: %s", projectPath)
 	
-	// For a proper Spring project, we'd typically use Spring Initializr
-	// This is a simplified example that creates a basic structure
-	
+	// Check if pom.xml already exists
+	if CheckFileExists(filepath.Join(projectPath, "pom.xml")) {
+		return fmt.Errorf("pom.xml already exists at %s. This looks like an existing Spring project", projectPath)
+	}
+
 	// Create directories
 	dirs := []string{
 		"src/main/java/com/example/demo",
@@ -25,11 +32,12 @@ func CreateBaseSpringProject(projectPath string) error {
 		"src/test/java/com/example/demo",
 		"src/test/resources",
 	}
-	
+
 	for _, dir := range dirs {
-		err := os.MkdirAll(filepath.Join(projectPath, dir), 0755)
+		fullPath := filepath.Join(projectPath, dir)
+		err := os.MkdirAll(fullPath, 0755)
 		if err != nil {
-			return err
+			return fmt.Errorf("failed to create directory %s: %v", dir, err)
 		}
 	}
 	
@@ -108,5 +116,13 @@ server.port=8080
     </build>
 </project>
 `
-	return os.WriteFile(filepath.Join(projectPath, "pom.xml"), []byte(pomContent), 0644)
+	err = os.WriteFile(filepath.Join(projectPath, "pom.xml"), []byte(pomContent), 0644)
+	if err != nil {
+		return err
+	}
+
+	fmt.Println("✓ Spring project created successfully")
+	fmt.Printf("Next steps:\n  cd %s\n  mvn clean install\n  mvn spring-boot:run\n", projectPath)
+
+	return nil
 }
